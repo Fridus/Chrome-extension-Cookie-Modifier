@@ -136,6 +136,7 @@ $(function(){
     });
 
     renderView($container, cookiesFiltered);
+    chrome.browserAction.setBadgeText({text: objectSize(cookiesFiltered).toString() });
   });
 
 
