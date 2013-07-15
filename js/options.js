@@ -1,4 +1,4 @@
-var ObjectSize = function(obj) {
+var objectSize = function(obj) {
     var size = 0, key;
     for (key in obj) {
         if (obj.hasOwnProperty(key)) size++;
@@ -91,7 +91,7 @@ $(function(){
   };
 
   var renderView = function() {
-    $cookiesCount.text(ObjectSize(cookies));
+    $cookiesCount.text(objectSize(cookies));
     $cookiesViewContainer.html('');
     var template = cookieBlockTemplate;
     $.each(cookies, function(cookieName, cookieValues){
