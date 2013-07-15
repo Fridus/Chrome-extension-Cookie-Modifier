@@ -1,10 +1,107 @@
 <html>
 <head>
-	<title>Cookies Options</title>
+	<title>The cookies modifier - Options</title>
 
-	<script type="text/javascript" src="js/options.js"></script>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css">
+	<style type="text/css">
+	.container {
+		width: 600px;
+	}
+	.cookie-block {
+		margin-bottom: 15px;
+		border-bottom: solid 1px #ccc;
+		padding-bottom: 10px;
+	}
+	input {
+		padding-top: 14px !important;
+		padding-bottom: 14px !important;
+	}
+	</style>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/ejs.min.js"></script>
 </head>
 <body>
-	<!-- FORM -->
+	<div class="container">
+		<div class="page-header">
+			<h1>The cookies modifier</h1>
+		</div>
+
+		<h2>Cookies <span class="badge badge-info cookiesCount">6</span></h2>
+
+
+		<div class="cookie-block-container" id="cookie-block-container">
+			<!-- <div class="cookie-block" id="cookie-2">
+				<table class="table table-bordered table-striped">
+					<tr>
+						<th rowspan="3">igloolb</th>
+						<td>RB1234</td>
+					</tr>
+					<tr>
+						<td>RB1234</td>
+					</tr>	
+					<tr>
+						<td>RB1234</td>
+					</tr>
+				</table>
+
+				<button class="cookiemodifier-delete btn btn-danger"><i class="icon-trash icon-white"></i> Delete...</button>
+				<button class="cookiemodifier-edit btn btn-primary"><i class="icon-pencil icon-white"></i> Edit...</button>
+			</div> -->
+		</div><!-- /cookie-block-container -->
+		
+		<div class="cookie-block-container">
+			<button class="btn btn-success" id="addCookieButton"><i class="icon-plus icon-white"></i> Add</button>
+		</div><!-- /cookie-block-container -->
+
+		<h2>Other</h2>
+		<h4>Reset: <a href="#" id="resetButton" class="btn btn-small btn-danger"><i class="icon-remove-circle icon-white"></i></a></h4>
+	</div><!-- / container -->
+
+	<!-- TEMPLATE COOKIE -->
+	<div id="cookieBlockTemplate" style="display:none;">
+		
+	</div>
+
+	<!-- MODAL BOXES -->
+	<div id="modalAdd" class="modal fade" style="display: none;" aria-hidden="true">
+    <div class="modal-header">
+      <a class="close" data-dismiss="modal">x</a>
+      <h3>Add Cookie</h3>
+    </div>
+
+    <div class="modal-body">
+      <form class="form-horizontal">
+        <fieldset>
+          <div class="control-group">
+            <label for="cookie-name" class="control-label">Name</label>
+            <div class="controls">
+              <div class="input-prepend">
+                <span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-name" type="text" class="span3">
+              </div>
+              <span class="help-inline"></span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="cookie-value" class="control-label">Value</label>
+            <div class="controls">
+              <div class="input-prepend">
+                <span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-value" type="text" class="span3">
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal">Cancel</button>
+      <button class="btn btn-primary saveButton"><i class="icon-ok icon-white"></i> Save</button>
+    </div>
+  </div>
+
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/options.js"></script>
 </body>
 </html>
