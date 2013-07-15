@@ -1,7 +1,7 @@
-var ObjectSize = function() {
+var ObjectSize = function(obj) {
     var size = 0, key;
-    for (key in this) {
-        if (this.hasOwnProperty(key)) size++;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
     }
     return size;
 };
