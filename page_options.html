@@ -13,6 +13,21 @@
 		border-bottom: solid 1px #ccc;
 		padding-bottom: 10px;
 	}
+
+	.cookie-block td {
+		position: relative;
+	}
+		.cookie-block td .cookiemodifier-delval {
+			position: absolute;
+			top: 5px;
+			bottom: 5px;
+			right: 5px;
+			display: none;
+		}
+		.cookie-block td:hover .cookiemodifier-delval {
+			display: block;
+		}
+
 	input {
 		padding-top: 14px !important;
 		padding-bottom: 14px !important;
@@ -57,48 +72,73 @@
 		<h4>Reset: <a href="#" id="resetButton" class="btn btn-small btn-danger"><i class="icon-remove-circle icon-white"></i></a></h4>
 	</div><!-- / container -->
 
-	<!-- TEMPLATE COOKIE -->
-	<div id="cookieBlockTemplate" style="display:none;">
-		
+	<!-- MODAL BOXES -->
+	<!-- ADD -->
+	<div id="modalAdd" class="modal fade" style="display: none;" aria-hidden="true">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">x</a>
+			<h3>Add Cookie</h3>
+		</div>
+
+		<div class="modal-body">
+			<form class="form-horizontal">
+			<fieldset>
+				<div class="control-group">
+					<label for="cookie-name" class="control-label">Name</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-name" type="text" class="span3">
+						</div>
+						<span class="help-inline"></span>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label for="cookie-value" class="control-label">Value</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-value" type="text" class="span3">
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			</form>
+		</div>
+
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal">Cancel</button>
+			<button class="btn btn-primary saveButton"><i class="icon-ok icon-white"></i> Save</button>
+		</div>
 	</div>
 
-	<!-- MODAL BOXES -->
-	<div id="modalAdd" class="modal fade" style="display: none;" aria-hidden="true">
-    <div class="modal-header">
-      <a class="close" data-dismiss="modal">x</a>
-      <h3>Add Cookie</h3>
-    </div>
+	<!-- EDIT -->
+	<div id="modalEdit" class="modal fade" style="display: none;" aria-hidden="true">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">x</a>
+			<h3>Add Cookie</h3>
+		</div>
 
-    <div class="modal-body">
-      <form class="form-horizontal">
-        <fieldset>
-          <div class="control-group">
-            <label for="cookie-name" class="control-label">Name</label>
-            <div class="controls">
-              <div class="input-prepend">
-                <span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-name" type="text" class="span3">
-              </div>
-              <span class="help-inline"></span>
-            </div>
-          </div>
+		<div class="modal-body">
+			<form class="form-horizontal">
+			<input type="hidden" name="name" value="" />
+			<fieldset>
+				<div class="control-group">
+					<label for="cookie-value" class="control-label">Value</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-pencil"></i></span><input name="value" id="cookie-value" type="text" class="span3">
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			</form>
+		</div>
 
-          <div class="control-group">
-            <label for="cookie-value" class="control-label">Value</label>
-            <div class="controls">
-              <div class="input-prepend">
-                <span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-value" type="text" class="span3">
-              </div>
-            </div>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal">Cancel</button>
-      <button class="btn btn-primary saveButton"><i class="icon-ok icon-white"></i> Save</button>
-    </div>
-  </div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal">Cancel</button>
+			<button class="btn btn-primary saveButton"><i class="icon-ok icon-white"></i> Save</button>
+		</div>
+	</div>
 
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/options.js"></script>

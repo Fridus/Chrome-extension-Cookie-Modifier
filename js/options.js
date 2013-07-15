@@ -9,7 +9,27 @@ var ObjectSize = function(obj) {
 ejs.open = '{{';
 ejs.close = '}}';
 
-var cookieBlockTemplate = '<div class="cookie-block" id="cookie-{{= cookieName }}"><table class="table table-bordered table-striped"><tr><th rowspan="3">{{= cookieName }}</th><td>{{= cookieValues[0]}}</td></tr>{{ for(var i = 1; i < cookieValues.length; i++) { }}      <tr>        <td>{{= cookieValues[1]}}</td>      </tr>      {{ } }}    </table>    <button class="cookiemodifier-delete btn btn-danger"><i class="icon-trash icon-white"></i> Delete...</button>    <button class="cookiemodifier-edit btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="icon-pencil icon-white"></i> Edit...</button><div/>';
+var cookieBlockTemplate = '\
+<div class="cookie-block" data-cookiename="{{= cookieName }}">\
+  <table class="table table-bordered table-striped">\
+    <tr>\
+      <th rowspan="{{= cookieValues.length }}">{{= cookieName }}</th>\
+      <td>\
+        <span class="cookie-value">{{= cookieValues[0]}}</span><button class="cookiemodifier-delval btn btn-danger"><i class="icon-trash icon-white"></i></button>\
+      </td>\
+    </tr>\
+    {{ for(var i = 1; i < cookieValues.length; i++) { }}\
+    <tr>\
+      <td>\
+        <span class="cookie-value">{{= cookieValues[i]}}</span>\
+        <button class="cookiemodifier-delval btn btn-danger"><i class="icon-trash icon-white"></i></button>\
+      </td>\
+    </tr>\
+    {{ } }}\
+  </table>\
+  <button class="cookiemodifier-delete btn btn-danger"><i class="icon-trash icon-white"></i> Delete...</button>   \
+  <button class="cookiemodifier-edit btn btn-primary"><i class="icon-pencil icon-white"></i> Add value</button>\
+<div/>';
 
 $(function(){
   
@@ -17,7 +37,9 @@ $(function(){
   var cookies = {},
       $cookiesCount = $('.cookiesCount'),
       $cookiesViewContainer = $('#cookie-block-container'),
-      $modalAdd = $('#modalAdd');
+      $modalAdd = $('#modalAdd'),
+      $modalEdit = $('#modalEdit'),
+      $modalDel = $('#modalDel');
 
   /* Functions */
   var resetLocalStorage = function() {
@@ -60,14 +82,12 @@ $(function(){
   };
 
   var removeCookieValue = function(name, value) {
-    window.localStorage.cookies[name].forEach(function(val, i){
-      console.log(val, i);
-      if( val === value) {
-        // delete
-        // break
+    cookies[name].forEach(function(val, i){
+      if( val === value ) {
+        cookies[name].splice(i, 1);
       }
     });
-    //setCookies();
+    setCookies();
   };
 
   var renderView = function() {
@@ -104,27 +124,65 @@ $(function(){
     var name = $inputs.filter('#cookie-name').val();
     var value = $inputs.filter('#cookie-value').val();
 
+    $inputs.filter('#cookie-name').val('');
+    $inputs.filter('#cookie-value').val('');
+
     setCookie(name, value);
     renderView();
     $modalAdd.modal('hide');
   });
-  // edit and delete => show modal
-  // $().on('click', ..., function(){})
-  //$('#myModal').modal('show')
 
-  // modal button -> action
+  // Add cookie value
+  $cookiesViewContainer.on('click', '.cookiemodifier-edit', function(e){
+    e.preventDefault();
 
+    var $cookieBox = $(this).parents('.cookie-block:first');
+    var cookiename = $cookieBox.data().cookiename;
 
+    $modalEdit.find('input[name="name"]').val(cookiename);
+
+    $modalEdit.modal('show');
+  });
+  $('.saveButton', $modalEdit).click(function(e){
+    e.preventDefault;
+    var $inputs = $('form input', $modalEdit);
+    var name = $inputs.filter('[name="name"]').val();
+    var value = $inputs.filter('[name="value"]').val();
+
+    $inputs.filter('[name="name"]').val('');
+    $inputs.filter('[name="value"]').val('');
+
+    addCookieValue(name, value);
+    renderView();
+    $modalEdit.modal('hide');
+  });
+
+  // Delete cookie value
+  $cookiesViewContainer.on('click', '.cookiemodifier-delval', function(e) {
+    e.preventDefault();
+    
+    if( !confirm('Delete ?') ) return;
+
+    var $this = $(this),
+        $cookieBox = $(this).parents('.cookie-block:first'),
+        cookiename = $cookieBox.data().cookiename,
+        cookievalue = $this.parent().find('.cookie-value').text();
+
+    removeCookieValue(cookiename, cookievalue);
+    renderView();
+  });
+
+  // Delete
+  $cookiesViewContainer.on('click', '.cookiemodifier-delete', function(e){
+    e.preventDefault();
+
+    if( !confirm('Delete ??') ) return;
+
+    var $cookieBox = $(this).parents('.cookie-block:first');
+    var cookiename = $cookieBox.data().cookiename;
+
+    deleteCookie(cookiename);
+    renderView();
+  });
 
 });
-
-/*
-  
-  - reset storage: delete all + ...
-
-  - set cookie tracked
-    - set possibles values for this cookie
-
-  - get cookie tracked and values
-
-*/
