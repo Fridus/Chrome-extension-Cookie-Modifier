@@ -6,7 +6,7 @@
   "description" :"Le truc du tutoriel",
 
   "icons": { "128": "icon_big.png" },
-  "options_page":"page_options.html",
+  "options_page":"options.html",
 
   "permissions": [
     "tabs",

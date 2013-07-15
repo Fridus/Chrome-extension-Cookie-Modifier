@@ -153,9 +153,14 @@ $(function(){
           window.location = 'popup.html'
         }, 1000);
         console.log('reload');
-        //renderView($container, cookiesFiltered);
-        
       })
+    });
+  });
+
+  $('.optionsLink').click(function(e){
+    e.preventDefault();
+    chrome.tabs.create({'url': chrome.extension.getURL('options.html')}, function(tab) {
+      // Tab opened.
     });
   });
 
