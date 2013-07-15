@@ -1,26 +1,7 @@
 
-var objectSize = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
 $(function(){
 
   /* Functions */
-
-  var getCookies = function(callback) {
-    chrome.tabs.query({active : true, currentWindow: true}, function (tab) {
-      var tabUrl = tab[0].url;
-      chrome.cookies.getAll({'url': tabUrl}, function(cookies) {
-        if(callback) {
-          return callback(cookies);
-        }
-      });
-    });
-  };
 
   var getCookie = function(name, callback) {
     chrome.tabs.query({active : true, currentWindow: true}, function (tab) {
@@ -32,28 +13,6 @@ $(function(){
       });
     });
   };
-
-  var getCookiesStored = function() {
-    if(!window.localStorage.cookies) {
-      {};
-     }
-
-    try {
-      var c = JSON.parse(window.localStorage.cookies)
-      return c;
-    } catch(e) {
-      console.warn('Invalid JSON, storage has been reseted.');
-      return {};
-    }
-  };
-
-  var getCookiesStoredName = function(cookies) {
-    var cNames = [];
-    $.each(cookies, function(cookieName){
-      cNames.push(cookieName);
-    });
-    return cNames;
-  }
 
   var setCookieValue = function(name, value, callback) {
     chrome.tabs.query({active : true, currentWindow: true}, function (tab) {
@@ -98,6 +57,7 @@ $(function(){
     }
 
     // TODO: enable module
+    //
 
     var html = $('<div />');
 
@@ -122,23 +82,10 @@ $(function(){
 
   /* Load */
 
-  var cookiesFiltered = {};
   var $container = $('.cookies-list');
-  getCookies(function(cookies){
-    var c = getCookiesStored();
-    var cKeys = getCookiesStoredName(c);
-    
-
-    cookies.forEach(function(cookie) {
-      if( cKeys.indexOf(cookie.name) >= 0 ) {
-        cookiesFiltered[cookie.name] = c[cookie.name];
-      }
-    });
-
+  updateCookiesFiltered(function(){
     renderView($container, cookiesFiltered);
-    chrome.browserAction.setBadgeText({text: objectSize(cookiesFiltered).toString() });
   });
-
 
   /* Events */
 
