@@ -13,15 +13,27 @@ var cookieBlockTemplate = '\
 <div class="cookie-block" data-cookiename="{{= cookieName }}">\
   <table class="table table-bordered table-striped">\
     <tr>\
+      <th>Name</th>\
+      <th>Value</th>\
+      <th>Label</th>\
+    </tr>\
+    <tr>\
       <th rowspan="{{= cookieValues.length }}">{{= cookieName }}</th>\
       <td>\
-        <span class="cookie-value">{{= cookieValues[0]}}</span><button class="cookiemodifier-delval btn btn-danger"><i class="icon-trash icon-white"></i></button>\
+        <span class="cookie-value">{{= cookieValues[0].value}}</span>\
+      </td>\
+      <td>\
+        <span class="cookie-label">{{= cookieValues[0].label}}</span>\
+        <button class="cookiemodifier-delval btn btn-danger"><i class="icon-trash icon-white"></i></button>\
       </td>\
     </tr>\
     {{ for(var i = 1; i < cookieValues.length; i++) { }}\
     <tr>\
       <td>\
-        <span class="cookie-value">{{= cookieValues[i]}}</span>\
+        <span class="cookie-value">{{= cookieValues[i].value}}</span>\
+      </td>\
+      <td>\
+        <span class="cookie-value">{{= cookieValues[i].label}}</span>\
         <button class="cookiemodifier-delval btn btn-danger"><i class="icon-trash icon-white"></i></button>\
       </td>\
     </tr>\
@@ -83,7 +95,7 @@ $(function(){
 
   var removeCookieValue = function(name, value) {
     cookies[name].forEach(function(val, i){
-      if( val === value ) {
+      if( val.value === value ) {
         cookies[name].splice(i, 1);
       }
     });
@@ -103,6 +115,7 @@ $(function(){
   /* Page Load */
   cookies = getCookies();
   renderView();
+  chrome.browserAction.setBadgeText({text: objectSize(cookies).toString() });
 
   /* Events */
   // Reset
@@ -123,11 +136,13 @@ $(function(){
     var $inputs = $('form input', $modalAdd);
     var name = $inputs.filter('#cookie-name').val();
     var value = $inputs.filter('#cookie-value').val();
+    var label = $inputs.filter('#cookie-label-value').val();
 
     $inputs.filter('#cookie-name').val('');
     $inputs.filter('#cookie-value').val('');
+    $inputs.filter('#cookie-label-value').val('');
 
-    setCookie(name, value);
+    setCookie(name, {value: value, label: label});
     renderView();
     $modalAdd.modal('hide');
   });
@@ -148,11 +163,13 @@ $(function(){
     var $inputs = $('form input', $modalEdit);
     var name = $inputs.filter('[name="name"]').val();
     var value = $inputs.filter('[name="value"]').val();
+    var label = $inputs.filter('[name="label"]').val();
 
     $inputs.filter('[name="name"]').val('');
     $inputs.filter('[name="value"]').val('');
+    $inputs.filter('[name="label"]').val('');
 
-    addCookieValue(name, value);
+    addCookieValue(name, {value: value, label: label});
     renderView();
     $modalEdit.modal('hide');
   });
@@ -166,7 +183,7 @@ $(function(){
     var $this = $(this),
         $cookieBox = $(this).parents('.cookie-block:first'),
         cookiename = $cookieBox.data().cookiename,
-        cookievalue = $this.parent().find('.cookie-value').text();
+        cookievalue = $this.parents('tr:first').find('.cookie-value').text();
 
     removeCookieValue(cookiename, cookievalue);
     renderView();

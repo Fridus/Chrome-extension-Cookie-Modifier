@@ -63,15 +63,25 @@ $(function(){
 
     $.each(cookies, function(cookieName, cookieValues){
       html.append($('<h4 />').text(cookieName));
-      cookieValues.forEach(function(value){
-        var input = $('<input type="radio" />').attr('name', cookieName).val(value);
+      cookieValues.forEach(function(valueObj){
+        var input = $('<input type="radio" />').attr('name', cookieName).val(valueObj.value);
         getCookie(cookieName, function(c){
-          if( c.value === value ) {
+          if( c.value === valueObj.value ) {
             input.attr('checked', 'checked');
           }
         });
+        var labelText = '';
+        if( typeof valueObj == 'object' ) {
+          if( valueObj.label && valueObj.label.length ) {
+            labelText = valueObj.label;
+          } else {
+            labelText = valueObj.value;
+          }
+        } else {
+          labelText = valueObj;
+        }
         html.append(
-          $('<label />').addClass('radio').append(input).append(value)
+          $('<label />').addClass('radio').append(input).append(labelText)
         )
       });
     });
