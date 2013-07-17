@@ -108,7 +108,9 @@ $(function(){
       $container.html('Reloading...');
       chrome.tabs.reload(null, null, function(){
         setTimeout(function(){
-          window.location = 'popup.html'
+          chrome.tabs.reload(null, null, function(){
+            window.location = 'popup.html'
+          });
         }, 1000);
         console.log('reload');
       })
