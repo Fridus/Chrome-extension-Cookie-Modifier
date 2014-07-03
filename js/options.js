@@ -24,7 +24,7 @@ var cookieBlockTemplate = '\
       </td>\
       <td>\
         <span class="cookie-label">{{= cookieValues[0].label}}</span>\
-        <button class="cookiemodifier-delval btn btn-danger"><i class="icon-trash icon-white"></i></button>\
+        <button class="cookiemodifier-delval btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>\
       </td>\
     </tr>\
     {{ for(var i = 1; i < cookieValues.length; i++) { }}\
@@ -34,17 +34,17 @@ var cookieBlockTemplate = '\
       </td>\
       <td>\
         <span class="cookie-value">{{= cookieValues[i].label}}</span>\
-        <button class="cookiemodifier-delval btn btn-danger"><i class="icon-trash icon-white"></i></button>\
+        <button class="cookiemodifier-delval btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>\
       </td>\
     </tr>\
     {{ } }}\
   </table>\
-  <button class="cookiemodifier-delete btn btn-danger"><i class="icon-trash icon-white"></i> Delete...</button>   \
-  <button class="cookiemodifier-edit btn btn-primary"><i class="icon-pencil icon-white"></i> Add value</button>\
+  <button class="cookiemodifier-delete btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete...</button>   \
+  <button class="cookiemodifier-edit btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Add value</button>\
 <div/>';
 
 $(function(){
-  
+
   /* Vars */
   var cookies = {},
       $cookiesCount = $('.cookiesCount'),
@@ -177,7 +177,7 @@ $(function(){
   // Delete cookie value
   $cookiesViewContainer.on('click', '.cookiemodifier-delval', function(e) {
     e.preventDefault();
-    
+
     if( !confirm('Delete ?') ) return;
 
     var $this = $(this),

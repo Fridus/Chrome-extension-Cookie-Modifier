@@ -3,7 +3,6 @@
 	<title>The cookies modifier - Options</title>
 
 	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" media="screen">
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css">
 	<style type="text/css">
 	.container {
 		width: 600px;
@@ -33,8 +32,8 @@
 		padding-bottom: 14px !important;
 	}
 	</style>
-	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-	<script type="text/javascript" src="js/ejs.min.js"></script>
+	<script type="text/javascript" src="js/lib/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="js/lib/ejs.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -44,117 +43,103 @@
 
 		<h2>Cookies <span class="badge badge-info cookiesCount">0</span></h2>
 
-		<div class="cookie-block-container" id="cookie-block-container">
-			<!-- <div class="cookie-block" id="cookie-2">
-				<table class="table table-bordered table-striped">
-					<tr>
-						<th rowspan="3">igloolb</th>
-						<td>RB1234</td>
-					</tr>
-					<tr>
-						<td>RB1234</td>
-					</tr>	
-					<tr>
-						<td>RB1234</td>
-					</tr>
-				</table>
+		<div class="cookie-block-container" id="cookie-block-container"></div>
 
-				<button class="cookiemodifier-delete btn btn-danger"><i class="icon-trash icon-white"></i> Delete...</button>
-				<button class="cookiemodifier-edit btn btn-primary"><i class="icon-pencil icon-white"></i> Edit...</button>
-			</div> -->
-		</div><!-- /cookie-block-container -->
-		
 		<div class="cookie-block-container">
-			<button class="btn btn-success" id="addCookieButton"><i class="icon-plus icon-white"></i> Add</button>
-		</div><!-- /cookie-block-container -->
+			<button class="btn btn-success" id="addCookieButton"><i class="glyphicon glyphicon-plus"></i> Add</button>
+		</div>
 
 		<h2>Other</h2>
-		<h4>Reset: <a href="#" id="resetButton" class="btn btn-small btn-danger"><i class="icon-remove-circle icon-white"></i></a></h4>
+		<h4>Reset: <a href="#" id="resetButton" class="btn btn-small btn-danger"><i class="glyphicon glyphicon-remove-sign"></i></a></h4>
 	</div><!-- / container -->
 
 	<!-- MODAL BOXES -->
 	<!-- ADD -->
 	<div id="modalAdd" class="modal fade" style="display: none;" aria-hidden="true">
-		<div class="modal-header">
-			<a class="close" data-dismiss="modal">x</a>
-			<h3>Add Cookie</h3>
-		</div>
-
-		<div class="modal-body">
-			<form class="form-horizontal">
-			<fieldset>
-				<div class="control-group">
-					<label for="cookie-name" class="control-label">Name</label>
-					<div class="controls">
-						<div class="input-prepend">
-							<span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-name" type="text" class="span3">
-						</div>
-						<span class="help-inline"></span>
-					</div>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a class="close" data-dismiss="modal">x</a>
+					<h3>Add Cookie</h3>
 				</div>
 
-				<div class="control-group">
-					<label for="cookie-value" class="control-label">Value</label>
-					<div class="controls">
-						<div class="input-prepend">
-							<span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-value" type="text" class="span3">
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="cookie-name" class="col-sm-3 control-label">Name</label>
+							<div class="col-sm-9">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span><input id="cookie-name" type="text" class="form-control">
+								</div>
+								<span class="help-inline"></span>
+							</div>
 						</div>
-					</div>
+
+						<div class="form-group">
+							<label for="cookie-value" class="col-sm-3 control-label">Value</label>
+							<div class="col-sm-9">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span><input id="cookie-value" type="text" class="form-control">
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="cookie-value" class="col-sm-3 control-label">Label of Value</label>
+							<div class="col-sm-9">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span><input id="cookie-label-value" type="text" class="form-control">
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
 
-				<div class="control-group">
-					<label for="cookie-value" class="control-label">Label of Value</label>
-					<div class="controls">
-						<div class="input-prepend">
-							<span class="add-on"><i class="icon-pencil"></i></span><input id="cookie-label-value" type="text" class="span3">
-						</div>
-					</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary saveButton"><i class="glyphicon glyphicon-ok"></i> Save</button>
 				</div>
-			</fieldset>
-			</form>
-		</div>
-
-		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal">Cancel</button>
-			<button class="btn btn-primary saveButton"><i class="icon-ok icon-white"></i> Save</button>
+			</div>
 		</div>
 	</div>
 
 	<!-- EDIT -->
 	<div id="modalEdit" class="modal fade" style="display: none;" aria-hidden="true">
-		<div class="modal-header">
-			<a class="close" data-dismiss="modal">x</a>
-			<h3>Add Value</h3>
-		</div>
-
-		<div class="modal-body">
-			<form class="form-horizontal">
-			<input type="hidden" name="name" value="" />
-			<fieldset>
-				<div class="control-group">
-					<label for="cookie-value" class="control-label">Value</label>
-					<div class="controls">
-						<div class="input-prepend">
-							<span class="add-on"><i class="icon-pencil"></i></span><input name="value" type="text" class="span3">
-						</div>
-					</div>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a class="close" data-dismiss="modal">x</a>
+					<h3>Add Value</h3>
 				</div>
 
-				<div class="control-group">
-					<label for="cookie-value" class="control-label">Label of value</label>
-					<div class="controls">
-						<div class="input-prepend">
-							<span class="add-on"><i class="icon-pencil"></i></span><input name="label" type="text" class="span3">
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+					<input type="hidden" name="name" value="" />
+					<div class="form-group">
+						<label for="cookie-value" class="col-sm-3 control-label">Value</label>
+						<div class="col-sm-9">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span><input name="value" type="text" class="form-control">
+							</div>
 						</div>
 					</div>
-				</div>
-			</fieldset>
-			</form>
-		</div>
 
-		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal">Cancel</button>
-			<button class="btn btn-primary saveButton"><i class="icon-ok icon-white"></i> Save</button>
+					<div class="form-group">
+						<label for="cookie-value" class="col-sm-3 control-label">Label of value</label>
+						<div class="col-sm-9">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span><input name="label" type="text" class="form-control">
+							</div>
+						</div>
+					</div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-primary saveButton"><i class="glyphicon glyphicon-ok"></i> Save</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
