@@ -14,27 +14,27 @@ var cookieBlockTemplate = '\
   <table class="table table-bordered table-striped">\
     <tr>\
       <th>Name</th>\
-      <th>Value</th>\
       <th>Label</th>\
+      <th>Value</th>\
     </tr>\
     <tr>\
       <th rowspan="{{= cookieValues.length }}">{{= cookieName }}</th>\
       <td>\
-        <span class="cookie-value">{{= cookieValues[0].value}}</span>\
-      </td>\
-      <td>\
         <span class="cookie-label">{{= cookieValues[0].label}}</span>\
         <button class="cookiemodifier-delval btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>\
+      </td>\
+      <td>\
+        <span class="cookie-value">{{= cookieValues[0].value}}</span>\
       </td>\
     </tr>\
     {{ for(var i = 1; i < cookieValues.length; i++) { }}\
     <tr>\
       <td>\
-        <span class="cookie-value">{{= cookieValues[i].value}}</span>\
-      </td>\
-      <td>\
         <span class="cookie-value">{{= cookieValues[i].label}}</span>\
         <button class="cookiemodifier-delval btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>\
+      </td>\
+      <td>\
+        <span class="cookie-value">{{= cookieValues[i].value}}</span>\
       </td>\
     </tr>\
     {{ } }}\

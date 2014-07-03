@@ -81,7 +81,9 @@ $(function(){
           labelText = valueObj;
         }
         html.append(
-          $('<label />').addClass('radio').append(input).append(labelText)
+          $('<div />').addClass('radio').append(
+            $('<label />').append(input).append(labelText)
+          )
         )
       });
     });
