@@ -183,7 +183,7 @@ $(function(){
     var $this = $(this),
         $cookieBox = $(this).parents('.cookie-block:first'),
         cookiename = $cookieBox.data().cookiename,
-        cookievalue = $this.parents('tr:first').find('.cookie-value').text();
+        cookievalue = $this.parents('td:first').find('.cookie-value').text();
 
     removeCookieValue(cookiename, cookievalue);
     renderView();
