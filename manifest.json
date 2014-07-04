@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name" :"Cookie test",
-  "version" :"0.0.2",
-  "description" :"Le truc du tutoriel",
+  "name" :"Cookie Modifier",
+  "version" :"0.0.3",
+  "description" :"Track and enable to change value of cookies specified.",
 
   "icons": { "128": "icon_big.png" },
   "options_page":"options.html",

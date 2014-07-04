@@ -74,8 +74,12 @@ $(function(){
     $cookiesCount.text(objectSize(cookies));
     $cookiesViewContainer.html('');
     $.each(cookies, function(cookieName, cookieValues){
+      if(!cookieValues) {
+        cookieValues = [];
+      }
       var html = ejs.render(cookieBlockTemplate, {cookieName: cookieName, cookieValues: cookieValues});
       $cookiesViewContainer.append(html);
+      $('.cookie-block tbody', $cookiesViewContainer).sortable();
     });
   };
 
@@ -90,6 +94,7 @@ $(function(){
     e.preventDefault();
     if(confirm('Delete config ?')) {
       resetLocalStorage();
+      renderView();
     }
   });
 
@@ -150,7 +155,7 @@ $(function(){
     var $this = $(this),
         $cookieBox = $(this).parents('.cookie-block:first'),
         cookiename = $cookieBox.data().cookiename,
-        cookievalue = $this.parents('td:first').find('.cookie-value').text();
+        cookievalue = $this.parent().find('.cookie-value').text();
 
     removeCookieValue(cookiename, cookievalue);
     renderView();
@@ -169,5 +174,24 @@ $(function(){
     renderView();
   });
 
-  $('.cookie-block tr').sortable();
+  $('.cookie-block table tbody').sortable();
+  $cookiesViewContainer.on("sortout", '.cookie-block table tbody', function(event, ui){
+    var $this = $(this),
+        $cookieBox = $(this).parents('.cookie-block:first'),
+        cookiename = $cookieBox.data().cookiename;
+
+    var _cookies = [];
+    $this.find('tr').each(function(){
+      var value = $(this).find('.cookie-value').text();
+      for(var i = 0; i <= cookies[cookiename].length; i++) {
+        if(cookies[cookiename][i].value == value) {
+          _cookies.push(cookies[cookiename][i]);
+          break;
+        }
+      }
+    });
+
+    cookies[cookiename] = _cookies;
+    setCookies();
+  });
 });
