@@ -9,39 +9,7 @@ var objectSize = function(obj) {
 ejs.open = '{{';
 ejs.close = '}}';
 
-var cookieBlockTemplate = '\
-<div class="cookie-block" data-cookiename="{{= cookieName }}">\
-  <table class="table table-bordered table-striped">\
-    <tr>\
-      <th>Name</th>\
-      <th>Label</th>\
-      <th>Value</th>\
-    </tr>\
-    <tr>\
-      <th rowspan="{{= cookieValues.length }}">{{= cookieName }}</th>\
-      <td>\
-        <span class="cookie-label">{{= cookieValues[0].label}}</span>\
-        <button class="cookiemodifier-delval btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>\
-      </td>\
-      <td>\
-        <span class="cookie-value">{{= cookieValues[0].value}}</span>\
-      </td>\
-    </tr>\
-    {{ for(var i = 1; i < cookieValues.length; i++) { }}\
-    <tr>\
-      <td>\
-        <span class="cookie-value">{{= cookieValues[i].label}}</span>\
-        <button class="cookiemodifier-delval btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>\
-      </td>\
-      <td>\
-        <span class="cookie-value">{{= cookieValues[i].value}}</span>\
-      </td>\
-    </tr>\
-    {{ } }}\
-  </table>\
-  <button class="cookiemodifier-delete btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete...</button>   \
-  <button class="cookiemodifier-edit btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Add value</button>\
-<div/>';
+var cookieBlockTemplate = document.getElementById('cookieBlock').innerHTML;
 
 $(function(){
 
@@ -105,9 +73,8 @@ $(function(){
   var renderView = function() {
     $cookiesCount.text(objectSize(cookies));
     $cookiesViewContainer.html('');
-    var template = cookieBlockTemplate;
     $.each(cookies, function(cookieName, cookieValues){
-      var html = ejs.render(template, {cookieName: cookieName, cookieValues: cookieValues});
+      var html = ejs.render(cookieBlockTemplate, {cookieName: cookieName, cookieValues: cookieValues});
       $cookiesViewContainer.append(html);
     });
   };
@@ -202,4 +169,5 @@ $(function(){
     renderView();
   });
 
+  $('.cookie-block tr').sortable();
 });
